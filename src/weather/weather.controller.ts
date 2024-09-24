@@ -11,7 +11,7 @@ export class WeatherController {
     }
 
     @Get('forecast')
-    getForecast(@Query('city') city : string, @Query('days') days : Number = 4) {
+    getForecast(@Query('city') city : string, @Query('days') days : number) {
         return this.weatherService.getForecast(city, days)
     }
 }

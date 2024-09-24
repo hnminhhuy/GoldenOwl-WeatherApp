@@ -3,15 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Subscriber } from './subscriber.entity';
 import { Repository } from 'typeorm';
 import { error } from 'console';
-import { MailService } from 'src/mail/mail.service';
 import {v4 as uuidv4 } from 'uuid'
+import { MailerService } from '@nestjs-modules/mailer';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SubscriberService {
     constructor(
         @InjectRepository(Subscriber)
         private subscriberRepository : Repository<Subscriber>,
-        private mailService : MailService
+        private mailerService : MailerService,
+        private readonly configService : ConfigService
     ) {}
 
     async addSubscriber(email: string, location: string) {
@@ -20,7 +22,15 @@ export class SubscriberService {
 
         const subscriber = this.subscriberRepository.create({id: uuidv4(), email, location});
         await this.subscriberRepository.save(subscriber);
-        this.mailService.sendConfirmationEmail(email, subscriber.id)
+        const confirmationLink = `${this.configService.get("HOST")}/subscribe/confirm?key=${subscriber.id}`;
+        await this.mailerService.sendMail({
+            to: email,
+            subject: 'GoldenO Weather -  Confirm Your Subscription',
+            template: 'confirmation_email',
+            context: {
+                confirmationLink: confirmationLink
+            }
+        });
         return subscriber;
     }
 
@@ -29,13 +39,18 @@ export class SubscriberService {
         if (!subscriber) {
             throw new Error("Subscriber not found!");
         }
-
         subscriber.confirmed = true;
-        await this.subscriberRepository.save(subscriber);
+        this.subscriberRepository.save(subscriber);
+        return "Confirm successfully!"
     }
 
     async removeSubscriber(email: string) {
         const result = await this.subscriberRepository.delete({email});
         return result;
+    }
+
+    async getAllConfirmedSubscriber() {
+        const res = await this.subscriberRepository.find({where: {confirmed: true}});
+        return res;
     }
 }

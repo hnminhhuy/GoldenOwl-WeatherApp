@@ -18,6 +18,12 @@ export class SubscriberController {
 
     @Post('unsubscribe')
     async unsubscribe(@Body('email') email: string) {
-        return await this.subscriberService.removeSubscriber(email);
+        try {
+            const res = await this.subscriberService.removeSubscriber(email);
+            return {message: "Unsubscribe successfully!"};
+        } catch(error) {
+            return { error }
+        }
+        
     }
 }
