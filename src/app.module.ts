@@ -5,16 +5,21 @@ import { HttpModule } from '@nestjs/axios';
 import { WeatherService } from './weather/weather.service';
 import { ConfigModule } from '@nestjs/config';
 import { WeatherController } from './weather/weather.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './database/database.module';
+import { SubscriberService } from './subscriber/subscriber.service';
+import { MailService } from './mail/mail.service';
+import { SubscriberModule } from './subscriber/subscriber.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    HttpModule
+    HttpModule,
+    DatabaseModule,
+    SubscriberModule
   ],
   controllers: [AppController, WeatherController],
-  providers: [AppService, WeatherService],
+  providers: [AppService, WeatherService, MailService],
 })
 export class AppModule {}
