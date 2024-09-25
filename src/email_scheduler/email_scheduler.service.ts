@@ -17,21 +17,19 @@ export class EmailSchedulerService {
 
     private preprocessData(res) {
         return {
-            city: res.location.name,
-            condition: res.forecast.forecastday[0].day.condition,
-            maxtemp_c: res.forecast.forecastday[0].day.maxtemp_c,
-            mintemp_c: res.forecast.forecastday[0].day.mintemp_c,
-            avgtemp_c: res.forecast.forecastday[0].day.avgtemp_c,
-            totalprecip_mm: res.forecast.forecastday[0].day.totalprecip_mm,
-            maxwind_kph: res.forecast.forecastday[0].day.maxwind_kph,
-            avghumidity: res.forecast.forecastday[0].day.avghumidity,
-            uv: res.forecast.forecastday[0].day.uv,
-            daily_chance_of_rain: res.forecast.forecastday[0].day.daily_chance_of_rain
+           city: res.location.name,
+           country: res.location.country,
+           date: res.forecasts[0].date, 
+           condition: res.forecasts[0].condition, 
+           temp: res.forecasts[0].temp,
+           humidity: res.forecasts[0].humidity,
+           wind: res.forecasts[0].wind,
         }
     }
 
-    @Cron("30 23 * * *")
+    @Cron("0 8 * * *")
     async sendDailyForecastToAll() {
+        console.log("Sending daily forecast!")
         const subscribers = await this.subscriberService.getAllConfirmedSubscriber();
         // Get unique City Names
         const uniqueCitites = [...new Set(subscribers.map(subscribers => subscribers.location))];
@@ -40,7 +38,7 @@ export class EmailSchedulerService {
 
         for (const city of uniqueCitites) {
             try {
-                const response = await lastValueFrom(this.weatherService.getForecast(city, 1))
+                const response = await lastValueFrom(this.weatherService.getForecast(`id:${city}`, 1))
                 const data = this.preprocessData(response);
                 cityWeatherMap.set(city, data);
             } catch (error) {
@@ -51,6 +49,7 @@ export class EmailSchedulerService {
         for (const subscriber of subscribers) {
             const data = cityWeatherMap.get(subscriber.location);
             await this.emailService.sendDailyForecast(subscriber.email, data);
+            console.log(`Sent to ${subscriber.email}`)
         }
 
     }

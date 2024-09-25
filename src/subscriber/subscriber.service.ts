@@ -44,8 +44,8 @@ export class SubscriberService {
         return "Confirm successfully!"
     }
 
-    async removeSubscriber(email: string) {
-        const result = await this.subscriberRepository.delete({email});
+    async removeSubscriber(uid: string) {
+        const result = await this.subscriberRepository.delete({id: uid});
         return result;
     }
 
