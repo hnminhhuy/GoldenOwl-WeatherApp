@@ -17,9 +17,9 @@ export class SubscriberController {
     }
 
     @Post('unsubscribe')
-    async unsubscribe(@Body('email') email: string) {
+    async unsubscribe(@Body('uid') uid: string) {
         try {
-            const res = await this.subscriberService.removeSubscriber(email);
+            const res = await this.subscriberService.removeSubscriber(uid);
             return {message: "Unsubscribe successfully!"};
         } catch(error) {
             return { error }
