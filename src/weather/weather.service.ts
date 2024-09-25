@@ -16,8 +16,9 @@ export class WeatherService {
     }
 
     getForecast(city: string, days: Number) {
+        console.log(`${this.baseUrl}/weather/forecast.json?q=${city}&days=${days}&key=${this.apiKey}`);
         return this.httpService
-            .get(`${this.baseUrl}/forecast.json?q=${city}&days=${days}&key=${this.apiKey}`)
+            .get(`${this.baseUrl}/weather/forecast.json?q=${city}&days=${days}&key=${this.apiKey}`)
             .pipe(
                 map((res) => ({
                     location: {
@@ -43,7 +44,8 @@ export class WeatherService {
                         throw new HttpException(
                             {
                                 status: HttpStatus.BAD_REQUEST,
-                                error: error.response.data.message,
+                                message: error.response.data.message,
+                                error: error.response.data.error,
                             },
                             HttpStatus.BAD_REQUEST
                         )
@@ -51,7 +53,7 @@ export class WeatherService {
                         throw new HttpException(
                         {
                             status: HttpStatus.INTERNAL_SERVER_ERROR,
-                            error: 'An error occured while fetching weather data',
+                            error: error.message,
                         }, 
                         HttpStatus.INTERNAL_SERVER_ERROR)
                     }
