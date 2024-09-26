@@ -26,6 +26,37 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+# NestJS Route Overview
+
+### WeatherController - `/weather`
+- **GET** `/weather/forecast`  
+  Route for fetching weather forecast data.
+
+- **GET** `/weather/search`  
+  Route for searching weather data.
+
+### SubscriberController - `/subscribe`
+- **POST** `/subscribe`  
+  Route for subscribing to weather notifications.
+
+- **GET** `/subscribe/confirm`  
+  Route for confirming the subscription.
+
+- **GET** `/subscribe/requestUnsubscribe`  
+  Route for requesting to unsubscribe from notifications.
+
+- **GET** `/subscribe/unsubscribe`  
+  Route for unsubscribing from notifications.
+
+### Test Routes
+- **GET** `/test/dailymail`  
+  Route for daily mail test.
+
+### General Routes
+- **GET** `/`  
+  Default root route.
+
+
 ## Project setup
 
 ```bash
