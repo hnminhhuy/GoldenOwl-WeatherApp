@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #f4f4f4;
+                padding: 20px;
+            }
+            .container {
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                color: #fff;
+                background-color: #dc3545; /* Red color for unsubscribe */
+                text-decoration: none;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Unsubscribe Confirmation</h1>
+            <p>Dear Subscriber,</p>
+            <p>We have received your request to unsubscribe from GoldenO Weather. Please confirm your unsubscription by clicking the button below:</p>
+            <a href="{{unsubscriptionLink}}" class="button">Confirm Unsubscribe</a>
+            <p>If you did not request this change, you can ignore this email, and you will remain subscribed to our weather service.</p>
+            <p>We hope to serve you again in the future!</p>
+            <p>Best regards,</p>
+            <p>The GoldenO Weather Team</p>
+        </div>
+    </body>
+</html>

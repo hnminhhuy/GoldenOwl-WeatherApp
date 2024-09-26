@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { HttpModule } from '@nestjs/axios';
 import { WeatherService } from './weather/weather.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { WeatherController } from './weather/weather.controller';
 import { DatabaseModule } from './database/database.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { MailerModule } from '@nestjs-modules/mailer';
@@ -15,6 +14,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { EmailService } from './email/email.service';
 import { EmailSchedulerService } from './email_scheduler/email_scheduler.service';
 import { SubscriberService } from './subscriber/subscriber.service';
+import { WeatherController } from './weather/weather.controller';
 
 @Module({
   imports: [

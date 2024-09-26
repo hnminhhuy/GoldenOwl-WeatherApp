@@ -5,13 +5,13 @@ import { WeatherService } from './weather.service';
 export class WeatherController {
     constructor(private weatherService : WeatherService) {}
 
-    @Get("current")
-    getCurrentWeather(@Query('city') city : string) {
-        return this.weatherService.getCurrent(city);
-    }
-
     @Get('forecast')
     getForecast(@Query('city') city : string, @Query('days') days : number) {
-        return this.weatherService.getForecast(city, days)
+        return this.weatherService.getForecast(city, days);
+    }
+
+    @Get('search')
+    searchLocation(@Query('city') city: string) {
+        return this.weatherService.search(city);
     }
 }
