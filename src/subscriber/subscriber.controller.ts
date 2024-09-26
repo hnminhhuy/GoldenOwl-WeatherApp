@@ -16,14 +16,19 @@ export class SubscriberController {
         return await this.subscriberService.confirmSubscriber(key);
     }
 
-    @Post('unsubscribe')
-    async unsubscribe(@Body('uid') uid: string) {
+    @Get('requestUnsubscribe')
+    async reqUnsubscribe(@Query('email') email: string) {
+        return await this.subscriberService.unsubscribingRequest(email);
+    }
+
+
+    @Get('unsubscribe')
+    async unsubscribe(@Query('uid') uid: string) {
         try {
             const res = await this.subscriberService.removeSubscriber(uid);
             return {message: "Unsubscribe successfully!"};
         } catch(error) {
             return { error }
-        }
-        
+        }  
     }
 }
