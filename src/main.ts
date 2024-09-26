@@ -9,7 +9,7 @@ async function bootstrap() {
    app.enableCors({
     origin: ['https://golden-owl-weather-app-ui.vercel.app', 'http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // if needed for cookies or authentication
+    credentials: false,
   });
 
   await app.listen(port);
