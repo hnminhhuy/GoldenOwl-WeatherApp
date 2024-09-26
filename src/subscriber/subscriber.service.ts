@@ -28,7 +28,7 @@ export class SubscriberService {
             )
         }
 
-        const subscriber = this.subscriberRepository.create({id: uuidv4(), email, location});
+        const subscriber = this.subscriberRepository.create({id: uuidv4(), email: email, location: location});
         await this.subscriberRepository.save(subscriber);
         const confirmationLink = `${this.configService.get("HOST")}/subscribe/confirm?key=${subscriber.id}`;
         await this.mailerService.sendMail({
